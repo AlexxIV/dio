@@ -63,11 +63,13 @@ class FormData {
   String _headerForField(String name, String value) {
     var header =
         'content-disposition: form-data; name="${_browserEncode(name)}"';
-    if (!isPlainAscii(value)) {
-      header = '$header\r\n'
-          'content-type: text/plain; charset=utf-8\r\n'
-          'content-transfer-encoding: binary';
-    }
+    // if (!isPlainAscii(value)) {
+    //   header = '$header\r\n'
+    //       'content-type: text/plain; charset=utf-8\r\n'
+    //       'content-transfer-encoding: binary';
+    // }
+    header = '$header\r\n'
+        'content-type: application/json';
     return '$header\r\n\r\n';
   }
 
@@ -154,6 +156,6 @@ class FormData {
 
   ///Transform the entire FormData contents as a list of bytes asynchronously.
   Future<List<int>> readAsBytes() {
-    return Future(()=>finalize().reduce((a, b) => [...a, ...b]));
+    return Future(() => finalize().reduce((a, b) => [...a, ...b]));
   }
 }
